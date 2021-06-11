@@ -111,7 +111,10 @@ int main()
     studWriter.open("Student Information.txt", ios::app);
     studWriter << fullName << "|" << average << "|" << discipline << "|" << GPAs[0] << "|" << numberOfCourses << "|" << eligible;
     for (int i = 0; i < noOfCourses; i++) {
-        studWriter << "|" << Cname[i] << "|" << grade[i];
+        studWriter << "|" << Cname[i];
+    }
+    for (int i = 0; i < noOfCourses; i++) {
+        studWriter << "|" << grade[i];
     }
     studWriter << endl;
     studWriter.close();
