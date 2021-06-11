@@ -11,13 +11,29 @@ using namespace std;
 #include <string>
 #include <vector>
 #include <numeric>
-#include "student.h"
+#include <fstream>
+#include "Functions.h"
 
 int main()
 {
+    bool runAgain = false;
+    string answer = "n";
+    string dummy;
+    fstream studChecker;
+    studChecker.open("Student Information.txt", ios::in);
+    int counter = 0;
+    while (!studChecker.eof()) { //sees how manylines are in the code
+        getline(studChecker, dummy);
+        counter++;
+    }
+    studChecker.close();
+    const string PASSCODE = "1111";
     const int MAX_GRADE = 120;
-    string fullName, dummy, numberOfCourses, courseName;// definen variable
+    string fullName, numberOfCourses, courseName;// definen variable
     int noOfCourses;
+    do{
+
+    
     do {
         cout << "Please enter your full name (first name, last name): ";// Ask user for full name
         getline(cin, fullName); // takes full name
@@ -77,15 +93,40 @@ int main()
         cout << "Disciplinary Infraction: NO" << endl;
     }
     // Checks if the user is honor roll or not
+    bool eligible;
     if (average >= 90 && noOfCourses >= 5 && discipline == false) {
         cout << "CONGRATULATIONS " << fullName << "! You have made the honor roll." << endl << endl;
+        eligible = true;
     }
     else {
         cout << "I'm Sorry " << fullName << " but you didn't qualify for the honor roll." << endl << endl;
+        eligible = false;
 
     }
-}
+    //THIS IS TEMPORARY FOR TESTING PURPOSES
+    vector<double> averages = { average };
+    vector<double>GPAs = averageToGPA(averages);
+    //Writing information to the file
+    fstream studWriter;
+    studWriter.open("Student Information.txt", ios::app);
+    studWriter << fullName << "|" << average << "|" << discipline << "|" << GPAs[0] << "|" << numberOfCourses << "|" << eligible;
+    for (int i = 0; i < noOfCourses; i++) {
+        studWriter << "|" << Cname[i] << "|" << grade[i];
+    }
+    studWriter << endl;
+    studWriter.close();
 
+    cout << "Press y/Y to run again. Any other character to proceed: ";
+        getline(cin, answer);
+        if (answer == "y" || answer == "Y") {
+            runAgain = true;
+        }   
+        else {
+            runAgain = false;
+        }
+    } while (runAgain);
+}
+    
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
