@@ -5,6 +5,7 @@
 // Honor Roll 2
 // No Extra
 // Software Design
+// Known defects: in doc https://docs.google.com/document/d/1AyZf3amQk2_wgsZHQRY5C7rFop2jLcr-0uxXz3YIqRY/edit
 using namespace std;
 
 #include <iostream>
